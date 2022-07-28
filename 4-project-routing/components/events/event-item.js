@@ -1,33 +1,37 @@
-import Link from "next/link";
+// import Link from "next/link";
+import Button from "../ui/button";
+import classes from "../../styles/events/event-item.module.css";
 
 const EventItem = (props) => {
-  console.log(props);
   const { title, image, date, location, id } = props;
 
   const humanReadableDate = new Date(date).toLocaleDateString("id-ID", {
-    day: "string",
+    day: "2-digit",
     month: "long",
     year: "numeric",
   });
 
-  const formattedAddress = location.replasce(",", "\n");
+  const formattedAddress = location.replace(", ", "\n");
 
   const exploreLink = `/events/${id}`;
 
   return (
-    <li>
-      <image src={`/${image}`} alt={title} />
-      <div>
-        <h2>{title}</h2>
-      </div>
-      <div>
-        <time>{humanReadableDate}</time>
-      </div>
-      <div>
-        <address>{formattedAddress}</address>
-      </div>
-      <div>
-        <Link href={exploreLink}>Explore More Event</Link>
+    <li className={classes.item}>
+      <img src={`./${image}`} alt={title} />
+      <div className={classes.content}>
+        <div className={classes.summary}>
+          <h2>{title}</h2>
+        </div>
+        <div className={classes.date}>
+          <time>{humanReadableDate}</time>
+        </div>
+        <div className={classes.address}>
+          <address>{formattedAddress}</address>
+        </div>
+        <div className={classes.actions}>
+          {/* <Link href={exploreLink}>Explore More Event</Link> */}
+          <Button link={exploreLink}>Explore More Event</Button>
+        </div>
       </div>
     </li>
   );
