@@ -1,9 +1,25 @@
+import { useRouter } from "next/router";
+
+import { getAllEvents } from "../../dummy-data";
+
+import EventList from "../../components/events/event-list";
+import EventSearch from "../../components/events/event-search";
+
 const EventsPage = () => {
+  const events = getAllEvents();
+  const router = useRouter();
+
+  const findEventsHandler = (year, month) => {
+    const fullPath = `/events/${year}/${month}`;
+
+    router.push(fullPath);
+  };
+
   return (
-    <div>
-      <h1>Events</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quidem, quisquam.</p>
-    </div>
+    <>
+      <EventSearch onSearch={findEventsHandler} />
+      <EventList events={events} />
+    </>
   );
 };
 
