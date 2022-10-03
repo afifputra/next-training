@@ -3,7 +3,6 @@ import classes from "../../styles/events/event-list.module.css";
 
 const EventList = (props) => {
   const { events } = props;
-
   return (
     <ul className={classes.list}>
       {events.map((event) => {
