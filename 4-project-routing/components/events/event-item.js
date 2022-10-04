@@ -30,7 +30,6 @@ const EventItem = (props) => {
           <address>{formattedAddress}</address>
         </div>
         <div className={classes.actions}>
-          {/* <Link href={exploreLink}>Explore More Event</Link> */}
           <Button link={exploreLink}>Explore More Event</Button>
         </div>
       </div>
