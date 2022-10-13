@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-const LastSalesPage = () => {
-  const [sales, setSales] = useState();
+const LastSalesPage = (props) => {
+  const [sales, setSales] = useState(props.sales);
   // const [isLoading, setIsLoading] = useState(false);
 
   const { data, error } = useSWR("https://nextjs-course-92950-default-rtdb.asia-southeast1.firebasedatabase.app/sales.json", fetcher);
@@ -55,11 +55,12 @@ const LastSalesPage = () => {
   //   setSales(transformedSales);
   //   setIsLoading(false);
   // }
+
   if (error) {
     return <p>Failed to load.</p>;
   }
 
-  if (!data || !sales) {
+  if (!data && !sales) {
     return <p>Loading...</p>;
   }
 
@@ -81,6 +82,32 @@ const LastSalesPage = () => {
         ))}
     </ul>
   );
+};
+
+export const getServerSideProps = async () => {
+  const response = await fetch("https://nextjs-course-92950-default-rtdb.asia-southeast1.firebasedatabase.app/sales.json");
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+
+  const transformedSales = [];
+
+  for (const key in data) {
+    transformedSales.push({
+      id: key,
+      username: data[key].username,
+      volume: data[key].volume,
+    });
+  }
+
+  return {
+    props: {
+      sales: transformedSales,
+    },
+  };
 };
 
 export default LastSalesPage;
