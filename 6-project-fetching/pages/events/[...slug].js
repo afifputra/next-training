@@ -35,7 +35,7 @@ function FilteredEventsPage(props) {
     );
   }
 
-  const date = new Date(props.year, props.month - 1);
+  const date = new Date(props.date.year, props.date.month - 1);
 
   return (
     <Fragment>
@@ -68,8 +68,10 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      year: numYear,
-      month: numMonth,
+      date: {
+        year: numYear,
+        month: numMonth,
+      },
       filteredEvents,
     },
   };
