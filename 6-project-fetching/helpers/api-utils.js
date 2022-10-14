@@ -13,3 +13,10 @@ export async function getFeaturedEvents() {
 
   return featuredEvents;
 }
+
+export async function getEventById(id) {
+  const allEvents = await getAllEvents();
+  const event = allEvents.find((event) => event.id === id);
+
+  return event;
+}
