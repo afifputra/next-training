@@ -1,6 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 function HomePage() {
+  const [feedbackItem, setFeedbackItem] = useState([]);
+
   const emailInputRef = useRef();
   const feedbackInputRef = useRef();
 
@@ -25,7 +27,13 @@ function HomePage() {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log(data), alert("Success!"), (emailInputRef.current.value = ""), (feedbackInputRef.current.value = ""));
+  };
+
+  const loadFeedbackHandler = () => {
+    fetch("/api/feedback")
+      .then((response) => response.json())
+      .then((data) => setFeedbackItem(data.feedback));
   };
 
   return (
@@ -42,6 +50,9 @@ function HomePage() {
         </div>
         <button type="submit">Send Feedback</button>
       </form>
+      <hr />
+      <button onClick={loadFeedbackHandler}>Load Feedback</button>
+      <ul>{!feedbackItem.length ? <p>No feedback yet!</p> : feedbackItem.map((item) => <li key={item.id}>{item.text}</li>)}</ul>
     </div>
   );
 }
