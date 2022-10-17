@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Fragment } from "react";
-import { extractFeedback, buildFeedbackPath } from "../api/feedback";
+import { extractFeedback, buildFeedbackPath } from "../api/feedback/index.js";
 
 function FeedbackPage(props) {
   const [detailFeedback, setDetailFeedback] = useState();
 
   const loadDetailHandler = async (id) => {
-    const response = await fetch(`/api/${id}`);
+    const response = await fetch(`/api/feedback/${id}`);
     const data = await response.json();
     setDetailFeedback(data.feedback);
   };
