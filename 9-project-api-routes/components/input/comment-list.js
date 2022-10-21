@@ -3,10 +3,10 @@ import classes from "./comment-list.module.css";
 function CommentList(props) {
   const { comments } = props;
 
-  if (!comments) {
+  if (!comments || comments.length === 0) {
     return <p className="centered">No comments yet!</p>;
   }
-  console.log(comments);
+
   return (
     <ul className={classes.comments}>
       {comments &&

@@ -4,19 +4,23 @@ import classes from "./newsletter-registration.module.css";
 function NewsletterRegistration() {
   const [email, setEmail] = useState("");
 
-  function checkValidity() {
-    if (email.trim() === "") {
-      alert("Please enter a valid email address.");
-      return;
-    }
+  /**
+   * ! Validate email address
+   */
 
-    if (!email.includes("@")) {
-      alert("Invalid email!");
-      return;
-    }
+  // function checkValidity() {
+  //   if (email.trim() === "") {
+  //     alert("Please enter a valid email address.");
+  //     return;
+  //   }
 
-    return true;
-  }
+  //   if (!email.includes("@")) {
+  //     alert("Invalid email!");
+  //     return;
+  //   }
+
+  //   return true;
+  // }
 
   function emailHandler(event) {
     setEmail(event.target.value);
@@ -25,13 +29,7 @@ function NewsletterRegistration() {
   function registrationHandler(event) {
     event.preventDefault();
 
-    const validate = checkValidity();
-
-    if (!validate) {
-      return;
-    }
-
-    fetch("/api/register", {
+    fetch("/api/newsletter", {
       method: "POST",
       body: JSON.stringify({ email }),
       headers: {
@@ -39,7 +37,11 @@ function NewsletterRegistration() {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then(
+        (data) => console.log(data),
+        setEmail((previousValue) => "")
+      )
+      .catch((error) => console.log(error));
   }
 
   return (
